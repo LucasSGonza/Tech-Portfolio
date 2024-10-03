@@ -1,9 +1,13 @@
-import { Box } from "@mui/material";
+import { AppBar, Box, List, Toolbar } from "@mui/material";
 
-export const Home = () => {
+export const HomePage = () => {
   return (
     <Box>
-      <h1>Home</h1>
+      <AppBar position="fixed">
+        <Toolbar sx={{ bgcolor: "yellow" }}>
+          <List></List>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 };

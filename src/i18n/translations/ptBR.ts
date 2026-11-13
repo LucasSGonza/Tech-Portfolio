@@ -20,8 +20,7 @@ export const ptBR = {
     enableDark: "Ativar modo escuro",
   },
   device: {
-    title: "Portfólio técnico do Lucas",
-    period: "2026/2027",
+    title: "Portfólio técnico do Lucas"
   },
   home: {
     minifigureAlt: "Boneco estilo LEGO do Lucas em pixel art",

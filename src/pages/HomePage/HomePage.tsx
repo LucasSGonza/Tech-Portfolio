@@ -58,7 +58,7 @@ export const HomePage: React.FC = () => {
           textAlign: { xs: "center", md: "left" },
         }}
       >
-        <Typography variant="h1" color="primary">
+        <Typography variant="h2" color="primary">
           {PROFILE.name}
         </Typography>
         <Typography variant="h3" component="p" color="text.secondary">

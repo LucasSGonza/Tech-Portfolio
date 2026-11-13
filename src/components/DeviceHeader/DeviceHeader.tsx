@@ -79,7 +79,7 @@ export const DeviceHeader: React.FC = () => {
           lineHeight: 1.5,
         }}
       >
-        {t.device.title} {t.device.period}
+        {t.device.title}
       </Typography>
 
       {/* Painel de controles: fundo próprio para a bandeira e o ícone contrastarem com o corpo. */}

@@ -20,8 +20,7 @@ export const enUS: Translation = {
     enableDark: "Switch to dark mode",
   },
   device: {
-    title: "Lucas's Tech Portfolio",
-    period: "2026/2027",
+    title: "Lucas's Tech Portfolio"
   },
   home: {
     minifigureAlt: "Lucas's LEGO-style minifigure in pixel art",

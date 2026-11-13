@@ -20,8 +20,7 @@ export const esES: Translation = {
     enableDark: "Activar modo oscuro",
   },
   device: {
-    title: "Portafolio técnico de Lucas",
-    period: "2026/2027",
+    title: "Portafolio técnico de Lucas"
   },
   home: {
     minifigureAlt: "Muñeco estilo LEGO de Lucas en pixel art",

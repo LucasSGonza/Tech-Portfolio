@@ -29,7 +29,8 @@ Fonte da verdade: `package.json` e `.nvmrc`. Estas versões **não devem ser alt
 | React Router DOM | ^7.5.0 | `BrowserRouter` + `Routes` — ver `modules/react-router.md` |
 | ESLint | ^9.9.0 | Flat config + `typescript-eslint` ^8.72.2, `react-hooks`, `react-refresh` |
 | Ícones | SVGs pixel art próprios + Material Icons | SVGs em `src/assets/icons/` (componente `PixelIcon`); fonte Material Icons do Google no `index.html`, usada com `<Icon>` do MUI só em controles utilitários (sem `@mui/icons-material`) |
-| Fontes | Pixelify Sans + JetBrains Mono | Google Fonts carregadas no `index.html`; aplicadas pelo tema (`src/theme/`) |
+| Fontes | JetBrains Mono | Google Fonts carregada no `index.html`; aplicada pelo tema (`src/theme/`) em todas as variantes, inclusive títulos |
+| Tema | Escuro (padrão) e claro | `src/theme/` (`createAppTheme` + `ThemeModeProvider`) + hook `useThemeMode` — ver "Tema escuro e claro" abaixo |
 | Idiomas | Context próprio (sem biblioteca) | `src/i18n/` + hook `useLanguage` — ver "Internacionalização" abaixo |
 
 Não há neste projeto: estado global (Redux etc.), cliente HTTP (Axios) nem framework de testes. **Não** os adicione sem aprovação.
@@ -53,6 +54,15 @@ O site tem três idiomas (`pt-BR`, `en-US`, `es-ES`), sem biblioteca de i18n:
 - **O que não é traduzido:** nomes próprios (tecnologias, projetos) e o nome de cada idioma no seletor ficam em `src/util/`.
 - **Preferência:** salva no `localStorage` por `LanguagePreferenceService`; sem preferência salva, vale o idioma do navegador e, por fim, `pt-BR`.
 - **Novo projeto ou tecnologia:** adicione o id em `src/types/types.ts`, o item em `src/util/projects.ts` ou `technologies.ts`, o ícone em `src/assets/icons/` e, para projetos, o resumo em `projects.summaries` dos três dicionários.
+
+### Tema escuro e claro
+
+Segue o mesmo desenho do idioma:
+
+- **Tema:** `createAppTheme(mode)` em `src/theme/theme.ts` cria o tema do MUI para `"dark"` ou `"light"` (tipo `ThemeMode` de `@/types`). Os tokens extras do aparelho ficam em `palette.pokedex` (module augmentation no mesmo arquivo).
+- **Estado:** `ThemeModeProvider` (`src/theme/ThemeModeProvider.tsx`) guarda o modo, envolve o `ThemeProvider` + `CssBaseline` e expõe `{ mode, toggleMode }` pelo contexto de `src/theme/themeModeContext.ts` (arquivos separados por causa da regra `react-refresh/only-export-components`).
+- **Uso:** `const { mode, toggleMode } = useThemeMode();` (hook de `@/hooks`). Para estilizar, prefira os tokens do tema no `sx`; use `mode` só quando o asset muda por tema (ex.: ícones do menu).
+- **Preferência:** salva no `localStorage` por `ThemeModePreferenceService` e lida de forma síncrona no primeiro render; sem preferência salva, vale o escuro (`DEFAULT_THEME_MODE`). O tema do sistema operacional (`prefers-color-scheme`) **não** é considerado.
 
 ---
 
@@ -89,6 +99,8 @@ O site tem três idiomas (`pt-BR`, `en-US`, `es-ES`), sem biblioteca de i18n:
 ```
 📁 src/
 ├── 📁 assets/          # Imagens, fontes e arquivos importados pelo código
+│   ├── 📁 icons/       # Pixel art 16×16: menu/, flags/, tech/, projects/, social/
+│   └── 📁 minifigures/ # Bonecos em pixel art (40×59), um por idioma
 ├── 📁 components/      # Componentes reutilizáveis
 │   ├── 📁 ProductCard/
 │   │   ├── ProductCard.tsx
@@ -110,8 +122,10 @@ O site tem três idiomas (`pt-BR`, `en-US`, `es-ES`), sem biblioteca de i18n:
 ├── 📁 routes/          # Definição de rotas (ver módulo de roteamento)
 ├── 📁 services/        # Comunicação externa
 │   └── index.ts
-├── 📁 theme/           # Tema do MUI (tokens visuais)
+├── 📁 theme/           # Tema do MUI (tokens visuais), contexto e provider do modo escuro/claro
 │   ├── theme.ts
+│   ├── themeModeContext.ts
+│   ├── ThemeModeProvider.tsx
 │   └── index.ts
 ├── 📁 types/           # Tipos e interfaces compartilhados
 │   ├── types.ts
@@ -174,7 +188,7 @@ createRoot(document.getElementById("root")!).render(
 Ordem canônica dos providers quando os módulos estiverem instalados (de fora para dentro):
 
 ```
-StrictMode > BrowserRouter (roteamento) > Provider (estado global) > ThemeProvider + CssBaseline (UI) > LanguageProvider (idioma) > App
+StrictMode > BrowserRouter (roteamento) > Provider (estado global) > ThemeModeProvider (com ThemeProvider + CssBaseline) > LanguageProvider (idioma) > App
 ```
 
 - `main.tsx` só é alterado para adicionar ou remover providers globais.

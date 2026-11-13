@@ -19,7 +19,7 @@ Você atua como um **desenvolvedor de software sênior** especializado em React 
 - **Contexto:** portfólio pessoal de desenvolvedor — uma aplicação web (SPA) para expor de maneira visual conhecimentos, projetos e tecnologias mais utilizadas.
 - **Objetivo:** apresentar o perfil profissional do autor de forma clara e visualmente atraente.
 - **Público-alvo:** recrutadores, empresas e outros desenvolvedores que visitam o portfólio.
-- **Funcionalidades principais:** layout com barra lateral colapsável e seletor de idioma (pt-BR, en-US, es-ES — o avatar e a bandeira mudam com o idioma), e quatro páginas: **Início** (`/`, `HomePage`), **Sobre mim** (`/about`, `AboutPage`), **Tecnologias** (`/tech`, `TechPage`) e **Projetos** (`/projects`, `ProjectsPage`, com modal em formato de livro). Todo o conteúdo é estático (`src/util/` e `src/i18n/`).
+- **Funcionalidades principais:** a interface é um aparelho portátil estilo "Pokédex" centralizado na tela (`DeviceFrame`), com faixa superior (`DeviceHeader`: rótulo do portfólio, seletor de idioma e botão de tema), barra lateral colapsável (`AppSidebar`) e a tela onde as rotas são renderizadas. Há dois temas alternáveis — **escuro** (padrão, azul sobre céu noturno) e **claro** (creme e vermelho) — e três idiomas (pt-BR, en-US, es-ES — o boneco em pixel art da Home e a bandeira mudam com o idioma). Três páginas: **Início** (`/`, `HomePage`: boneco, nome, idade e redes sociais), **Tecnologias** (`/tech`, `TechPage`) e **Projetos** (`/projects`, `ProjectsPage`, com modal em formato de livro). Todo o conteúdo é estático (`src/util/` e `src/i18n/`); os dados pessoais ficam em `src/util/profile.ts`.
 - **Status:** em desenvolvimento ativo. Protótipo de referência no [Figma](https://www.figma.com/design/s400omU83eOzCHEicL3xHA/MyPortfolio?node-id=0-1&p=f&t=BYNOOCeet7YyvuUe-0).
 
 Stack e versões: seção "Stack e Versões" de `docs/guides/react-development-guide.md`.
@@ -139,7 +139,6 @@ Não pergunte sobre detalhes já cobertos pelos documentos — aplique os padrõ
 
 Código existente que **não segue** estes padrões. Não o use como referência e não o refatore sem pedido. Se a tarefa tocar um desses trechos, aplique o padrão correto no que for alterado e **sugira** (sem aplicar) a correção do restante.
 
-- **Avatar en-US:** `src/assets/avatars/avatar-en.png` é arte de terceiros (personagem LEGO), escolhida pelo autor. Não a reutilize em outros lugares nem a substitua sem pedido.
 - **Dependências:** `@emotion/react`, peer dependency obrigatória do MUI, não está declarada no `package.json` — está instalada apenas porque o npm resolveu a peer dependency.
 - **Node 23 fora de suporte:** o `npm install` mostra um aviso `EBADENGINE` do `eslint-visitor-keys@5`. O aviso é esperado; não altere versões para silenciá-lo (ver "Avisos esperados" em `docs/guides/react-development-guide.md`).
 - **TypeScript:** `tsconfig.app.json` não é referenciado por `tsconfig.json`. A checagem de tipos de `src/` (e o alias `@/`) vem do próprio `tsconfig.json`.

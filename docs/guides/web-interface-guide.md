@@ -8,10 +8,16 @@ Orientações visuais e de experiência para qualquer elemento de interface. A s
 
 ## Visão Geral
 
-Portfólio pessoal com visual de "taverna" em pixel art (madeira clara + rubi). Layout: barra lateral colapsável à esquerda (Início, Sobre mim, Tecnologias, Projetos), conteúdo centralizado e, no canto superior direito, o avatar circular com a bandeira do idioma atual logo abaixo. Em telas pequenas a barra lateral fica recolhida e, ao expandir, sobrepõe o conteúdo.
+Portfólio pessoal em forma de aparelho portátil estilo "Pokédex" (genérico — sem logotipos, nomes ou elementos gráficos oficiais da franquia), centralizado na página. O aparelho tem três partes:
+
+- **Faixa superior** (`DeviceHeader`): lente redonda e três luzes decorativas (`aria-hidden`), o rótulo do portfólio em texto pequeno e, à direita, um painel com a bandeira do idioma e o botão de tema.
+- **Barra lateral** (`AppSidebar`): coluna de botões colapsável (Início, Tecnologias, Projetos). Em telas pequenas fica recolhida e, ao expandir, sobrepõe a tela.
+- **Tela** (`DeviceFrame`): painel rebaixado com moldura grossa (bezel); é a `<main>`, onde as rotas são renderizadas.
+
+Em `md` ou maior o aparelho fica centralizado (largura máxima de 1040px, altura mínima de `min(720px, 100vh - 48px)`); em `xs`/`sm` ocupa a largura toda com margem pequena e cresce com o conteúdo. Há dois temas: **escuro** (padrão — azul sobre um céu noturno com estrelas em pixel) e **claro** (creme e vermelho), alternados pelo visitante.
 
 - **Referência de design:** [protótipo no Figma](https://www.figma.com/design/s400omU83eOzCHEicL3xHA/MyPortfolio?node-id=0-1&p=f&t=BYNOOCeet7YyvuUe-0) — é a fonte para o que ainda não estiver documentado aqui.
-- **Onde os tokens estão definidos no código:** tema do MUI em `src/theme/theme.ts` (`createTheme`), aplicado no `main.tsx` com `ThemeProvider` + `CssBaseline`. Para mudar um token, altere o tema — nunca o componente.
+- **Onde os tokens estão definidos no código:** `createAppTheme(mode)` em `src/theme/theme.ts`, aplicado pelo `ThemeModeProvider` (`ThemeProvider` + `CssBaseline`). Para mudar um token, altere o tema — nunca o componente.
 
 > Se o design de referência divergir deste documento, pergunte antes de implementar.
 
@@ -19,35 +25,49 @@ Portfólio pessoal com visual de "taverna" em pixel art (madeira clara + rubi). 
 
 ### Cores
 
-| Token | Valor | Uso |
-|---|---|---|
-| primary (`primary.main`) | `#8E1023` (rubi) | Títulos, ícones do menu, item ativo, ações principais |
-| secondary (`secondary.main`) | `#5B3A1E` (madeira escura) | Bordas, molduras, capa do livro, tooltips |
-| background (`background.default`) | `#D8B88A` (madeira clara) | Fundo da aplicação |
-| surface (`background.paper`) | `#EBD9B4` (pergaminho) | Barra lateral, slots de ícone, páginas do livro, menus |
-| text-primary (`text.primary`) | `#2B2B2B` (grafite) | Texto principal |
-| text-secondary (`text.secondary`) | `#4A3F35` | Texto de apoio |
-| divider | `#5B3A1E` | Divisores e bordas finas |
-| error / warning / success | Padrões do MUI até haver definição | Feedback de estado |
+| Token | Escuro (padrão) | Claro | Uso |
+|---|---|---|---|
+| `background.default` | `#060A18` | `#F3E7CF` | Fundo da página (no escuro, com estrelas em pixel); fundo do item ativo do menu |
+| `background.paper` | `#0F1B36` | `#FBF4E4` | Barra lateral, slots de ícone, páginas do livro, menus, painel de controles |
+| `primary.main` | `#6FB1FF` | `#A3131F` | Títulos, ícones ativos, item ativo, foco, ações principais |
+| `secondary.main` | `#4570B8` | `#6E1A1A` | Bordas dos slots, capa do livro |
+| `text.primary` | `#E8F0FF` | `#2B2B2B` | Texto principal; fundo dos tooltips (com texto em `background.paper`) |
+| `text.secondary` | `#A8B8D8` | `#5A4A42` | Texto de apoio |
+| `divider` | `#4570B8` | `#6E1A1A` | Divisores e bordas finas |
+| `pokedex.body` | `#1D3F78` | `#C62828` | Corpo do aparelho |
+| `pokedex.edge` | `#0C1E40` | `#7F1414` | Borda externa do aparelho, contorno da lente e das luzes, borda da capa do livro |
+| `pokedex.screen` | `#0B1428` | `#FBF4E4` | Fundo da tela (`<main>`) |
+| `pokedex.bezel` | `#060D1D` | `#3A2A26` | Moldura da tela |
+| `pokedex.lens` | `#7FD4FF` | `#7FD4FF` | Lente da faixa superior |
+| `pokedex.bodyText` | `#E8F0FF` | `#FFF8EE` | Texto sobre o corpo (rótulo da faixa superior), aro e brilho da lente |
+| `pokedex.lights` | `#FF5A5A`, `#FFD23F`, `#5BD16A` | iguais | Luzes decorativas |
+| error / warning / success | Padrões do MUI | Padrões do MUI | Feedback de estado |
+
+- Os tokens `pokedex.*` estendem a paleta do MUI (module augmentation em `theme.ts`) e são usados no `sx` como qualquer outro (`bgcolor: "pokedex.body"`).
+- O `secondary.main` e o `divider` do modo escuro foram clareados em relação à primeira proposta (`#2A4E8C` → `#4570B8`) para as bordas dos slots terem 3:1 sobre a tela (3.72) e sobre `background.paper` (3.46).
+- Contrastes de referência (escuro / claro): `text.primary` sobre a tela 16.0 / 12.9; `text.secondary` sobre a tela 9.2 / 7.7; `primary.main` sobre a tela 8.2 / 7.2; `pokedex.bodyText` sobre o corpo 9.0 / 5.3; tooltip 14.9 / 12.9.
+- As cores **internas** dos SVGs em pixel art são fixas e não dependem do tema.
+- **Sempre valide os dois temas** ao criar ou alterar qualquer elemento visual: contraste AA e legibilidade no escuro e no claro.
 
 ### Tipografia
 
-- **Títulos, rótulos e botões:** Pixelify Sans (variantes `h1`–`h6` e `button`).
-- **Texto corrido:** JetBrains Mono (demais variantes).
+- **Fonte única:** JetBrains Mono em todas as variantes, inclusive títulos. Títulos (`h1`–`h6`) e botões em peso 700. O estilo pixel fica só nos ícones e nos bonecos.
 - **Como as fontes são carregadas:** Google Fonts, por `<link>` no `index.html`. Adicionar outra fonte exige aprovação.
-- **Escala tipográfica:** definida no tema, com `responsiveFontSizes` (os títulos encolhem em telas pequenas). Título de página: `variant="h2" component="h1"`; a Home usa `variant="h1"`.
+- **Escala tipográfica:** definida no tema (`h1` 2.25rem, `h2` 1.75rem, `h3` 1.25rem), com `responsiveFontSizes` (os títulos encolhem em telas pequenas). Título de página: `variant="h2" component="h1"`; na Home, o nome do autor é o `h1` (`variant="h1"`). O rótulo do portfólio na faixa superior usa `variant="overline"`.
 
 ### Espaçamento, bordas e sombras
 
 - **Unidade base de espaçamento:** 8px (`theme.spacing` padrão do MUI — use `p: 2`, `gap: 3` etc.).
-- **Border-radius:** `0` em tudo (`shape.borderRadius` do tema), para manter o visual pixel. A única exceção é o avatar, que é circular.
-- **Bordas:** molduras com `border: 4` e `borderColor: "secondary.main"`; o destaque (hover, foco, item ativo) troca a cor para `primary.main`.
-- **Sombras:** use a escala `boxShadow` do MUI (`1`–`24`) apenas onde o componente do MUI já a aplica (diálogo, menu).
+- **Border-radius:** `0` em tudo (`shape.borderRadius` do tema), para manter o visual pixel. As únicas exceções são a lente e as luzes da faixa superior, que são círculos.
+- **Bordas:** retas e grossas (`border: 4`). Peças do aparelho usam `pokedex.edge`; slots usam `secondary.main`; o destaque (hover, foco, item ativo) troca a cor para `primary.main`.
+- **Sombras:** use a escala `boxShadow` do MUI (`1`–`24`) apenas onde o componente do MUI já a aplica (diálogo, menu). O `Paper` não recebe o clareamento por elevação do modo escuro (`backgroundImage: none` no tema).
 
-### Ícones
+### Ícones e bonecos
 
-- **Pixel art (identidade do site):** SVGs próprios em `src/assets/icons/` (`menu/`, `flags/`, `tech/`, `projects/`) e `src/assets/home/`, desenhados em grade 16×16 com `shape-rendering="crispEdges"`. Renderize com o componente `PixelIcon`. Um ícone novo segue a mesma grade e fica na subpasta correspondente — **não** copie texturas ou logotipos de terceiros.
-- **Controles utilitários** (abrir/fechar menu, fechar diálogo): fonte **Material Icons**, carregada via Google Fonts no `index.html` e usada com o componente `<Icon>` do MUI (ex.: `<Icon>close</Icon>`). O projeto **não** usa `@mui/icons-material`.
+- **Pixel art (identidade do site):** SVGs próprios em `src/assets/icons/` (`menu/`, `flags/`, `tech/`, `projects/`, `social/`), desenhados em grade 16×16 com `shape-rendering="crispEdges"` e um `<path>` por cor. Renderize com o componente `PixelIcon`. Um ícone novo segue a mesma grade e fica na subpasta correspondente — **não** copie texturas ou logotipos de terceiros.
+- **Ícones do menu:** têm uma variante por tema (`home.svg` em rubi para o claro, `home-dark.svg` em azul para o escuro, idem `computer` e `book`); a `AppSidebar` escolhe pelo `mode` de `useThemeMode`.
+- **Bonecos:** `src/assets/minifigures/minifigure-{pt,en,es}.svg`, grade 40×59, com as proporções de uma minifigura clássica (cabeça de cantos arredondados, pescoço, tronco em trapézio, braços abertos com mãos em "C", quadril e pernas). Mesma silhueta, mesmo rosto (sobrancelhas, olhos com brilho, sorriso aberto, sem barba) e mesmo cabelo castanho curto e levemente ondulado; só a roupa e o acessório mudam. Contorno de 1px em tudo. Contorno escuro para ler nos dois temas. Exiba em larguras múltiplas de 40px para os pixels ficarem nítidos.
+- **Controles utilitários** (abrir/fechar menu, fechar diálogo, alternar tema): fonte **Material Icons**, carregada via Google Fonts no `index.html` e usada com o componente `<Icon>` do MUI (ex.: `<Icon>close</Icon>`). O projeto **não** usa `@mui/icons-material`.
 
 ### Regras de identidade
 
@@ -87,12 +107,12 @@ Toda tela ou componente que depende de dados assíncronos trata os quatro estado
 - **Área de toque** mínima de 44×44px em elementos interativos.
 - Botões só com ícone têm `aria-label`.
 - Não transmita informação **apenas** por cor — acompanhe com texto ou ícone.
-- Respeite `prefers-reduced-motion` em animações.
+- Respeite `prefers-reduced-motion` em animações. O tema já zera a duração de todas as transições e animações (inclusive as do MUI) quando o visitante pede menos movimento; não crie animação que dependa de JavaScript para avançar.
 - O `<html>` declara o idioma do conteúdo (`lang`) e cada página tem um `<title>` significativo.
 
 ## Imagens e Assets
 
-- Importe imagens de `src/assets/` pelo sistema de módulos (`import avatar from "@/assets/avatar.png"`) — **NUNCA** use strings como `"src/assets/..."`, que quebram no build de produção.
+- Importe imagens de `src/assets/` pelo sistema de módulos (`import minifigure from "@/assets/minifigures/minifigure-pt.svg"`) — **NUNCA** use strings como `"src/assets/..."`, que quebram no build de produção.
 - Arquivos que precisam de URL fixa (favicon, `robots.txt`) ficam em `public/` e são referenciados a partir da raiz (`/favicon.svg`).
 - Prefira SVG para ícones e ilustrações e formatos modernos (WebP/AVIF) para fotos; defina `width`/`height` para evitar deslocamento de layout.
 
@@ -104,5 +124,5 @@ Toda tela ou componente que depende de dados assíncronos trata os quatro estado
 - [ ] HTML semântico e um `<h1>` por página
 - [ ] Imagens com `alt`; campos com `label`; botões de ícone com `aria-label`
 - [ ] Navegável por teclado, com foco visível
-- [ ] Contraste AA respeitado
+- [ ] Contraste AA respeitado nos dois temas (escuro e claro)
 - [ ] Assets importados via módulo, sem caminhos `src/...` em string

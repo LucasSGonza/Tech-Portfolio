@@ -35,7 +35,7 @@ O repositório segue **Gitflow**:
 | `release/<x.y.z>` | `develop` | `main` **e** `develop` | Preparação de versão: só ajustes finais, versão e changelog |
 | `hotfix/<descricao>` | `main` | `main` **e** `develop` | Correção urgente em produção |
 
-- Nomes em `kebab-case`, curtos e descritivos, em inglês: `feature/projects-page`, `hotfix/broken-avatar-image`, `release/1.2.0`.
+- Nomes em `kebab-case`, curtos e descritivos, em inglês: `feature/projects-page`, `hotfix/broken-flag-icon`, `release/1.2.0`.
 - Uma branch trata **um** assunto.
 - Ao fechar `release/*` ou `hotfix/*`, a versão recebe a tag `vX.Y.Z` em `main` (ver SemVer).
 

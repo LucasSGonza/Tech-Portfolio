@@ -1,21 +1,19 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import "@/css/index.css";
 import { LanguageProvider } from "@/i18n";
-import { theme } from "@/theme";
+import { ThemeModeProvider } from "@/theme";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <ThemeModeProvider>
         <LanguageProvider>
           <App />
         </LanguageProvider>
-      </ThemeProvider>
+      </ThemeModeProvider>
     </BrowserRouter>
   </StrictMode>
 );

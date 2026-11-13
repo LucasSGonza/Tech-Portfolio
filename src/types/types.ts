@@ -1,5 +1,17 @@
 export type Language = "pt-BR" | "en-US" | "es-ES";
 
+export type ThemeMode = "dark" | "light";
+
+export type SocialLinkId = "linkedin" | "github" | "email";
+
+export interface SocialLink {
+  id: SocialLinkId;
+  href: string;
+  icon: string;
+  /** Links para outros sites abrem em nova aba; o `mailto:` não. */
+  isExternal: boolean;
+}
+
 export type TechnologyId =
   | "java"
   | "spring"
@@ -50,5 +62,6 @@ export interface LanguageOption {
   /** Nome do idioma no próprio idioma (endônimo) — não é traduzido. */
   label: string;
   flag: string;
-  avatar: string;
+  /** Boneco em pixel art exibido na Home para este idioma. */
+  minifigure: string;
 }

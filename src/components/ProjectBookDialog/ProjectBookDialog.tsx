@@ -12,12 +12,11 @@ interface ProjectBookDialogProps {
 
 const TITLE_ID = "project-book-title";
 
-/** Capa do livro: moldura escura em volta das duas páginas. */
+/** Capa do livro: moldura em volta das duas páginas, com a borda do aparelho. */
 const coverSx: SxProps<Theme> = {
   bgcolor: "secondary.main",
-  backgroundImage: "none",
   border: 4,
-  borderColor: "text.primary",
+  borderColor: "pokedex.edge",
   p: { xs: 1, sm: 2 },
   pt: { xs: 0.5, sm: 0.5 },
 };
@@ -51,7 +50,7 @@ export const ProjectBookDialog: React.FC<ProjectBookDialogProps> = ({
       slotProps={{ paper: { sx: coverSx } }}
     >
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <IconButton aria-label={t.projects.close} onClick={onClose} sx={{ color: "background.paper" }}>
+        <IconButton aria-label={t.projects.close} onClick={onClose} sx={{ color: "secondary.contrastText" }}>
           <Icon>close</Icon>
         </IconButton>
       </Box>

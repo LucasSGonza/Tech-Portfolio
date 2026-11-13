@@ -28,7 +28,9 @@ Fonte da verdade: `package.json` e `.nvmrc`. Estas versões **não devem ser alt
 | Material UI | `@mui/material` ^7.3.4 | Com `@emotion/styled` ^11.14 — ver `modules/mui.md` |
 | React Router DOM | ^7.5.0 | `BrowserRouter` + `Routes` — ver `modules/react-router.md` |
 | ESLint | ^9.9.0 | Flat config + `typescript-eslint` ^8.72.2, `react-hooks`, `react-refresh` |
-| Ícones | Material Icons / Material Symbols | Fontes do Google carregadas no `index.html`, usadas com `<Icon>` do MUI (sem `@mui/icons-material`) |
+| Ícones | SVGs pixel art próprios + Material Icons | SVGs em `src/assets/icons/` (componente `PixelIcon`); fonte Material Icons do Google no `index.html`, usada com `<Icon>` do MUI só em controles utilitários (sem `@mui/icons-material`) |
+| Fontes | Pixelify Sans + JetBrains Mono | Google Fonts carregadas no `index.html`; aplicadas pelo tema (`src/theme/`) |
+| Idiomas | Context próprio (sem biblioteca) | `src/i18n/` + hook `useLanguage` — ver "Internacionalização" abaixo |
 
 Não há neste projeto: estado global (Redux etc.), cliente HTTP (Axios) nem framework de testes. **Não** os adicione sem aprovação.
 
@@ -42,9 +44,15 @@ O `package.json` tem um `overrides` que força `minimatch` `^11.0.8` dentro de `
 
 Com o Node 23.11.0, o `npm install` exibe um aviso `EBADENGINE` do `eslint-visitor-keys@5`, que pede Node `^20.19.0 || ^22.13.0 || >=24`. O aviso é inofensivo e vem do Node 23 estar fora de suporte. **Não** rebaixe dependências para silenciá-lo, porque isso reintroduz vulnerabilidades. A solução definitiva é migrar para o Node 24 LTS (`.nvmrc` e `engines`), o que exige aprovação.
 
-### Pastas ainda inexistentes
+### Internacionalização
 
-Hoje `src/` contém `assets/`, `components/`, `css/`, `pages/` e `routes/`. As pastas `hooks/`, `services/`, `types/` e `util/` da estrutura abaixo são criadas quando surgir o primeiro conteúdo delas, seguindo este guia.
+O site tem três idiomas (`pt-BR`, `en-US`, `es-ES`), sem biblioteca de i18n:
+
+- **Dicionários:** `src/i18n/translations/ptBR.ts`, `enUS.ts` e `esES.ts`. O `ptBR.ts` define o tipo `Translation`; os outros dois são tipados por ele, então uma chave faltando é erro de compilação.
+- **Uso:** `const { t, language, setLanguage } = useLanguage();` (hook de `@/hooks`). **NUNCA** escreva texto visível ao usuário direto no componente — adicione a chave nos três dicionários.
+- **O que não é traduzido:** nomes próprios (tecnologias, projetos) e o nome de cada idioma no seletor ficam em `src/util/`.
+- **Preferência:** salva no `localStorage` por `LanguagePreferenceService`; sem preferência salva, vale o idioma do navegador e, por fim, `pt-BR`.
+- **Novo projeto ou tecnologia:** adicione o id em `src/types/types.ts`, o item em `src/util/projects.ts` ou `technologies.ts`, o ícone em `src/assets/icons/` e, para projetos, o resumo em `projects.summaries` dos três dicionários.
 
 ---
 
@@ -90,6 +98,9 @@ Hoje `src/` contém `assets/`, `components/`, `css/`, `pages/` e `routes/`. As p
 │   └── index.css       # Estilos globais
 ├── 📁 hooks/           # Custom hooks compartilhados por mais de um componente/página
 │   └── index.ts
+├── 📁 i18n/            # Dicionários de tradução, contexto e provider de idioma
+│   ├── 📁 translations/
+│   └── index.ts
 ├── 📁 pages/           # Um componente de página por rota
 │   ├── 📁 ProductsPage/
 │   │   ├── ProductsPage.tsx
@@ -98,6 +109,9 @@ Hoje `src/` contém `assets/`, `components/`, `css/`, `pages/` e `routes/`. As p
 │   └── index.ts
 ├── 📁 routes/          # Definição de rotas (ver módulo de roteamento)
 ├── 📁 services/        # Comunicação externa
+│   └── index.ts
+├── 📁 theme/           # Tema do MUI (tokens visuais)
+│   ├── theme.ts
 │   └── index.ts
 ├── 📁 types/           # Tipos e interfaces compartilhados
 │   ├── types.ts
@@ -160,7 +174,7 @@ createRoot(document.getElementById("root")!).render(
 Ordem canônica dos providers quando os módulos estiverem instalados (de fora para dentro):
 
 ```
-StrictMode > BrowserRouter (roteamento) > Provider (estado global) > ThemeProvider + CssBaseline (UI) > App
+StrictMode > BrowserRouter (roteamento) > Provider (estado global) > ThemeProvider + CssBaseline (UI) > LanguageProvider (idioma) > App
 ```
 
 - `main.tsx` só é alterado para adicionar ou remover providers globais.

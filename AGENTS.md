@@ -19,7 +19,7 @@ Você atua como um **desenvolvedor de software sênior** especializado em React 
 - **Contexto:** portfólio pessoal de desenvolvedor — uma aplicação web (SPA) para expor de maneira visual conhecimentos, projetos e tecnologias mais utilizadas.
 - **Objetivo:** apresentar o perfil profissional do autor de forma clara e visualmente atraente.
 - **Público-alvo:** recrutadores, empresas e outros desenvolvedores que visitam o portfólio.
-- **Funcionalidades principais:** página única (`/`, `HomePage`) com as seções **Sobre mim** (foto e apresentação), **Projetos** e **Tecnologias** — as duas últimas ainda são placeholders com ícone.
+- **Funcionalidades principais:** layout com barra lateral colapsável e seletor de idioma (pt-BR, en-US, es-ES — o avatar e a bandeira mudam com o idioma), e quatro páginas: **Início** (`/`, `HomePage`), **Sobre mim** (`/about`, `AboutPage`), **Tecnologias** (`/tech`, `TechPage`) e **Projetos** (`/projects`, `ProjectsPage`, com modal em formato de livro). Todo o conteúdo é estático (`src/util/` e `src/i18n/`).
 - **Status:** em desenvolvimento ativo. Protótipo de referência no [Figma](https://www.figma.com/design/s400omU83eOzCHEicL3xHA/MyPortfolio?node-id=0-1&p=f&t=BYNOOCeet7YyvuUe-0).
 
 Stack e versões: seção "Stack e Versões" de `docs/guides/react-development-guide.md`.
@@ -139,17 +139,7 @@ Não pergunte sobre detalhes já cobertos pelos documentos — aplique os padrõ
 
 Código existente que **não segue** estes padrões. Não o use como referência e não o refatore sem pedido. Se a tarefa tocar um desses trechos, aplique o padrão correto no que for alterado e **sugira** (sem aplicar) a correção do restante.
 
-- **`src/pages/HomePage/Home.tsx`**
-  - O arquivo deveria se chamar `HomePage.tsx`.
-  - Usa `<img style={{}}>`, `<h1>`, `<h2>` e `<span>` crus em vez de componentes do MUI com `sx`.
-  - Tem a cor `#fbfce8` hardcoded.
-  - Referencia a imagem pela string `"src\assets\foto-comportado.png"`, que quebra no build — o correto é importar o asset.
-  - O layout em linha com `width: "50%"` não é mobile-first.
-- **`src/pages/HomePage/index.ts`**: usa `export *` em vez de export nomeado.
-- **`src/routes/WebRouter.tsx`**: importa de `@/pages/HomePage` em vez do barrel `@/pages`.
-- **`src/css/index.css`**: a regra `* { font-family: "Open Sans"; color: black; }` sobrescreve a tipografia e as cores do MUI em todos os elementos. Além disso, a fonte Open Sans não é carregada em lugar nenhum (falta `<link>` ou `@font-face`).
-- **`index.html`**: `lang="en"` com conteúdo em pt-BR, e não há `<title>`.
-- **Tema:** não há tema do MUI (`createTheme`/`ThemeProvider`), então os tokens visuais ainda não existem no código.
+- **Avatar en-US:** `src/assets/avatars/avatar-en.png` é arte de terceiros (personagem LEGO), escolhida pelo autor. Não a reutilize em outros lugares nem a substitua sem pedido.
 - **Dependências:** `@emotion/react`, peer dependency obrigatória do MUI, não está declarada no `package.json` — está instalada apenas porque o npm resolveu a peer dependency.
 - **Node 23 fora de suporte:** o `npm install` mostra um aviso `EBADENGINE` do `eslint-visitor-keys@5`. O aviso é esperado; não altere versões para silenciá-lo (ver "Avisos esperados" em `docs/guides/react-development-guide.md`).
 - **TypeScript:** `tsconfig.app.json` não é referenciado por `tsconfig.json`. A checagem de tipos de `src/` (e o alias `@/`) vem do próprio `tsconfig.json`.

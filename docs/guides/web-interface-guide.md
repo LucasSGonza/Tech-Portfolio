@@ -8,10 +8,10 @@ Orientações visuais e de experiência para qualquer elemento de interface. A s
 
 ## Visão Geral
 
-Portfólio pessoal de página única. Seções atuais: **Sobre mim** (foto de perfil circular e texto de apresentação), **Projetos** e **Tecnologias**. Hoje o layout é dividido em duas colunas (Sobre mim à esquerda; Projetos e Tecnologias à direita).
+Portfólio pessoal com visual de "taverna" em pixel art (madeira clara + rubi). Layout: barra lateral colapsável à esquerda (Início, Sobre mim, Tecnologias, Projetos), conteúdo centralizado e, no canto superior direito, o avatar circular com a bandeira do idioma atual logo abaixo. Em telas pequenas a barra lateral fica recolhida e, ao expandir, sobrepõe o conteúdo.
 
-- **Referência de design:** [protótipo no Figma](https://www.figma.com/design/s400omU83eOzCHEicL3xHA/MyPortfolio?node-id=0-1&p=f&t=BYNOOCeet7YyvuUe-0) — é a fonte para cores, tipografia e layout ainda não documentados aqui.
-- **Onde os tokens estão definidos no código:** ⚠️ A definir. Ainda não há tema do MUI; hoje existem valores soltos em `src/css/index.css` e em `src/pages/HomePage/Home.tsx`. O destino previsto é um tema `createTheme` em `src/theme/` (ver `modules/mui.md`), cuja criação exige aprovação.
+- **Referência de design:** [protótipo no Figma](https://www.figma.com/design/s400omU83eOzCHEicL3xHA/MyPortfolio?node-id=0-1&p=f&t=BYNOOCeet7YyvuUe-0) — é a fonte para o que ainda não estiver documentado aqui.
+- **Onde os tokens estão definidos no código:** tema do MUI em `src/theme/theme.ts` (`createTheme`), aplicado no `main.tsx` com `ThemeProvider` + `CssBaseline`. Para mudar um token, altere o tema — nunca o componente.
 
 > Se o design de referência divergir deste documento, pergunte antes de implementar.
 
@@ -21,29 +21,33 @@ Portfólio pessoal de página única. Seções atuais: **Sobre mim** (foto de pe
 
 | Token | Valor | Uso |
 |---|---|---|
-| primary | ⚠️ A definir (consultar o Figma) | Ações principais e destaques |
-| secondary | ⚠️ A definir (consultar o Figma) | Ações secundárias e superfícies de destaque |
-| background | `#fbfce8` (em uso no fundo da `HomePage`) | Fundo da aplicação |
-| surface | ⚠️ A definir | Cards, modais e painéis |
-| text-primary | `black` (regra global em `src/css/index.css`) | Texto principal |
-| text-secondary | ⚠️ A definir | Texto de apoio |
+| primary (`primary.main`) | `#8E1023` (rubi) | Títulos, ícones do menu, item ativo, ações principais |
+| secondary (`secondary.main`) | `#5B3A1E` (madeira escura) | Bordas, molduras, capa do livro, tooltips |
+| background (`background.default`) | `#D8B88A` (madeira clara) | Fundo da aplicação |
+| surface (`background.paper`) | `#EBD9B4` (pergaminho) | Barra lateral, slots de ícone, páginas do livro, menus |
+| text-primary (`text.primary`) | `#2B2B2B` (grafite) | Texto principal |
+| text-secondary (`text.secondary`) | `#4A3F35` | Texto de apoio |
+| divider | `#5B3A1E` | Divisores e bordas finas |
 | error / warning / success | Padrões do MUI até haver definição | Feedback de estado |
 
 ### Tipografia
 
-- **Fonte principal:** Open Sans (sans-serif como fallback).
-- **Como a fonte é carregada:** ⚠️ hoje **não** é carregada — apenas declarada em `src/css/index.css`. Carregá-la (Google Fonts no `index.html` ou `@font-face`) exige aprovação.
-- **Escala tipográfica:** variantes padrão do `Typography` do MUI (`h1`–`h6`, `body1`, `body2`) até haver definição no Figma.
+- **Títulos, rótulos e botões:** Pixelify Sans (variantes `h1`–`h6` e `button`).
+- **Texto corrido:** JetBrains Mono (demais variantes).
+- **Como as fontes são carregadas:** Google Fonts, por `<link>` no `index.html`. Adicionar outra fonte exige aprovação.
+- **Escala tipográfica:** definida no tema, com `responsiveFontSizes` (os títulos encolhem em telas pequenas). Título de página: `variant="h2" component="h1"`; a Home usa `variant="h1"`.
 
 ### Espaçamento, bordas e sombras
 
 - **Unidade base de espaçamento:** 8px (`theme.spacing` padrão do MUI — use `p: 2`, `gap: 3` etc.).
-- **Border-radius:** ⚠️ A definir. A foto de perfil é circular.
-- **Sombras:** ⚠️ A definir — use a escala `boxShadow` do MUI (`1`–`24`) até haver definição.
+- **Border-radius:** `0` em tudo (`shape.borderRadius` do tema), para manter o visual pixel. A única exceção é o avatar, que é circular.
+- **Bordas:** molduras com `border: 4` e `borderColor: "secondary.main"`; o destaque (hover, foco, item ativo) troca a cor para `primary.main`.
+- **Sombras:** use a escala `boxShadow` do MUI (`1`–`24`) apenas onde o componente do MUI já a aplica (diálogo, menu).
 
 ### Ícones
 
-- **Biblioteca de ícones:** fontes **Material Icons** e **Material Symbols Outlined**, carregadas via Google Fonts no `index.html` e usadas com o componente `<Icon>` do MUI (ex.: `<Icon>smart_toy</Icon>`). O projeto **não** usa `@mui/icons-material`.
+- **Pixel art (identidade do site):** SVGs próprios em `src/assets/icons/` (`menu/`, `flags/`, `tech/`, `projects/`) e `src/assets/home/`, desenhados em grade 16×16 com `shape-rendering="crispEdges"`. Renderize com o componente `PixelIcon`. Um ícone novo segue a mesma grade e fica na subpasta correspondente — **não** copie texturas ou logotipos de terceiros.
+- **Controles utilitários** (abrir/fechar menu, fechar diálogo): fonte **Material Icons**, carregada via Google Fonts no `index.html` e usada com o componente `<Icon>` do MUI (ex.: `<Icon>close</Icon>`). O projeto **não** usa `@mui/icons-material`.
 
 ### Regras de identidade
 

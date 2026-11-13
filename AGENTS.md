@@ -151,6 +151,7 @@ Código existente que **não segue** estes padrões. Não o use como referência
 - **`index.html`**: `lang="en"` com conteúdo em pt-BR, e não há `<title>`.
 - **Tema:** não há tema do MUI (`createTheme`/`ThemeProvider`), então os tokens visuais ainda não existem no código.
 - **Dependências:** `@emotion/react`, peer dependency obrigatória do MUI, não está declarada no `package.json` — está instalada apenas porque o npm resolveu a peer dependency.
+- **Node 23 fora de suporte:** o `npm install` mostra um aviso `EBADENGINE` do `eslint-visitor-keys@5`. O aviso é esperado; não altere versões para silenciá-lo (ver "Avisos esperados" em `docs/guides/react-development-guide.md`).
 - **TypeScript:** `tsconfig.app.json` não é referenciado por `tsconfig.json`. A checagem de tipos de `src/` (e o alias `@/`) vem do próprio `tsconfig.json`.
 - **Artefatos do build:** `npm run build` gera `vite.config.js`, `vite.config.d.ts`, `tsconfig.tsbuildinfo` e `tsconfig.node.tsbuildinfo` na raiz (o `tsconfig.node.json` é `composite` sem `noEmit`), e esses arquivos **não** estão no `.gitignore`. Nunca os inclua em commits; apague-os depois de rodar o build.
 - **Git:** o histórico de commits está em pt-BR, sem escopo (inclui `wip` e `clean`) e foi feito direto em `develop`. Daqui em diante, siga Gitflow e commits semânticos em EN-US.

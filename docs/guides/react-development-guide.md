@@ -21,18 +21,26 @@ Fonte da verdade: `package.json` e `.nvmrc`. Estas versões **não devem ser alt
 
 | Tecnologia | Versão | Observação |
 |---|---|---|
-| Node.js | 23.11.0 | `.nvmrc`; `engines`: `>=18.0.0 <=23.11.0` |
+| Node.js | 23.11.0 | `.nvmrc`; `engines`: `^20.19.0 \|\| >=22.12.0 <=23.11.0` (mínimo exigido pelo Vite 7). O Node 23 está fora de suporte — ver "Avisos esperados" abaixo |
 | React + React DOM | ^18.3.1 | **React 18** — APIs exclusivas do React 19 (`use`, `ref` como prop, Actions, `useActionState`, `useOptimistic`) **não** estão disponíveis |
-| Vite | ^5.4.1 | `@vitejs/plugin-react` ^4.3; dev server na porta 3000 |
+| Vite | ^7.3.8 | `@vitejs/plugin-react` ^4.7.0 (compatível com Vite 7, não com Vite 8); dev server na porta 3000 |
 | TypeScript | ^5.5.3 | `strict` ativo; `verbatimModuleSyntax` **não** está ativo, mas use `import type` mesmo assim |
 | Material UI | `@mui/material` ^7.3.4 | Com `@emotion/styled` ^11.14 — ver `modules/mui.md` |
 | React Router DOM | ^7.5.0 | `BrowserRouter` + `Routes` — ver `modules/react-router.md` |
-| ESLint | ^9.9.0 | Flat config + `typescript-eslint`, `react-hooks`, `react-refresh` |
+| ESLint | ^9.9.0 | Flat config + `typescript-eslint` ^8.72.2, `react-hooks`, `react-refresh` |
 | Ícones | Material Icons / Material Symbols | Fontes do Google carregadas no `index.html`, usadas com `<Icon>` do MUI (sem `@mui/icons-material`) |
 
 Não há neste projeto: estado global (Redux etc.), cliente HTTP (Axios) nem framework de testes. **Não** os adicione sem aprovação.
 
 > Use apenas APIs disponíveis nas versões instaladas. Antes de usar uma API recente, confirme a versão no `package.json`.
+
+### Overrides de segurança
+
+O `package.json` tem um `overrides` que força `minimatch` `^11.0.8` dentro de `@typescript-eslint/typescript-estree`. Ele existe porque até o `typescript-eslint` 8.72.2 depende de um `minimatch` 10.x vulnerável. **Não** remova esse override, a menos que o `typescript-eslint` passe a usar `minimatch` 11 e o `npm audit` continue limpo sem ele.
+
+### Avisos esperados
+
+Com o Node 23.11.0, o `npm install` exibe um aviso `EBADENGINE` do `eslint-visitor-keys@5`, que pede Node `^20.19.0 || ^22.13.0 || >=24`. O aviso é inofensivo e vem do Node 23 estar fora de suporte. **Não** rebaixe dependências para silenciá-lo, porque isso reintroduz vulnerabilidades. A solução definitiva é migrar para o Node 24 LTS (`.nvmrc` e `engines`), o que exige aprovação.
 
 ### Pastas ainda inexistentes
 

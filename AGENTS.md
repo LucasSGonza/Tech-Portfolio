@@ -50,10 +50,11 @@ Stack e versões: seção "Stack e Versões" de `docs/guides/react-development-g
 | Ação | Comando |
 |---|---|
 | Instalar dependências | `npm install` (use Node 23.11.0 — `nvm use`) |
-| Servidor de desenvolvimento | `npm run dev` (Vite em `http://localhost:3000`, porta fixa) |
+| Servidor de desenvolvimento | `npm run dev` (Vite em `http://localhost:3000/Tech-Portfolio/`, porta fixa) |
 | Build de produção (inclui checagem de tipos) | `npm run build` (`tsc -b && vite build`) |
 | Lint | `npm run lint` |
-| Pré-visualizar o build | `npm run preview` |
+| Pré-visualizar o build | `npm run preview` (em `/Tech-Portfolio/`) |
+| Deploy | Automático: `.github/workflows/deploy.yml` publica no GitHub Pages (`https://lucassgonza.github.io/Tech-Portfolio/`) a cada push na `main`. O app roda sob o caminho base `/Tech-Portfolio/` (`base` do Vite + `basename` do `BrowserRouter`); detalhes na seção "Deploy" do `README.md` |
 | Testes | **Não há testes configurados.** Não adicione framework de testes sem aprovação |
 
 ---

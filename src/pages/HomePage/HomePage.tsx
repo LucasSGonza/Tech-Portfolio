@@ -1,50 +1,73 @@
 import { Box, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material";
-import { keyframes } from "@mui/material/styles";
-import campfireSprite from "@/assets/home/campfire.svg";
+import { alpha } from "@mui/material/styles";
+import { PixelIconList } from "@/components";
 import { useLanguage } from "@/hooks";
+import { LANGUAGE_OPTION_BY_CODE, PROFILE, SOCIAL_LINKS } from "@/util";
 
-// A folha de sprites tem 3 quadros lado a lado; `steps(3)` exibe um quadro por vez.
-const flicker = keyframes`
-  from { background-position-x: 0%; }
-  to { background-position-x: 150%; }
-`;
-
-const spriteSx: SxProps<Theme> = {
-  width: { xs: 128, md: 192 },
-  aspectRatio: "1 / 1",
-  // Aspas obrigatórias: o SVG pode ser embutido como data URI com caracteres especiais.
-  backgroundImage: `url("${campfireSprite}")`,
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "300% 100%",
-  imageRendering: "pixelated",
-  animation: `${flicker} 0.6s steps(3) infinite`,
-  "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+/** "Holofote" atrás do boneco, para ele se destacar também na tela escura. */
+const spotlightSx: SxProps<Theme> = {
+  display: "flex",
+  justifyContent: "center",
+  flexShrink: 0,
+  p: 2,
+  backgroundImage: (theme) =>
+    `radial-gradient(circle at 50% 45%, ${alpha(theme.palette.primary.main, 0.22)}, transparent 70%)`,
 };
 
 export const HomePage: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  const socialItems = SOCIAL_LINKS.map((link) => ({ ...link, name: t.home.social[link.id] }));
 
   return (
     <Box
       component="section"
       sx={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: { xs: "column", md: "row" },
         alignItems: "center",
-        gap: 4,
+        justifyContent: "center",
+        gap: { xs: 3, md: 6 },
         width: "100%",
         maxWidth: "md",
-        textAlign: "center",
       }}
     >
-      <Typography variant="h1" color="primary" sx={{ overflowWrap: "anywhere" }}>
-        {t.home.title}
-        <Box component="span" sx={{ display: "block" }}>
-          {t.home.period}
+      <Box sx={spotlightSx}>
+        {/* Grade de 40×59 pixels: larguras múltiplas de 40 mantêm os pixels nítidos. */}
+        <Box
+          component="img"
+          src={LANGUAGE_OPTION_BY_CODE[language].minifigure}
+          alt={t.home.minifigureAlt}
+          sx={{
+            display: "block",
+            width: { xs: 160, md: 240 },
+            aspectRatio: "40 / 59",
+            imageRendering: "pixelated",
+          }}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: { xs: "center", md: "flex-start" },
+          gap: 2,
+          minWidth: 0,
+          textAlign: { xs: "center", md: "left" },
+        }}
+      >
+        <Typography variant="h1" color="primary">
+          {PROFILE.name}
+        </Typography>
+        <Typography variant="h3" component="p" color="text.secondary">
+          {PROFILE.age} {t.home.ageSuffix}
+        </Typography>
+        <Box sx={{ mt: 1 }}>
+          <PixelIconList items={socialItems} ariaLabel={t.home.socialLabel} />
         </Box>
-      </Typography>
-      <Box role="img" aria-label={t.home.spriteAlt} sx={spriteSx} />
+      </Box>
     </Box>
   );
 };

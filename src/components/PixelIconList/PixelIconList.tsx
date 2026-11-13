@@ -6,12 +6,16 @@ interface PixelIconListItem {
   id: string;
   name: string;
   icon: string;
+  /** Quando informado, o item vira um link. */
+  href?: string;
+  /** Abre o link em nova aba (com `rel="noopener noreferrer"`). */
+  isExternal?: boolean;
 }
 
 interface PixelIconListProps {
   items: PixelIconListItem[];
   ariaLabel: string;
-  /** Quando informado, cada item vira um botão que devolve o id do item selecionado. */
+  /** Quando informado, cada item sem `href` vira um botão que devolve o id do item selecionado. */
   onSelect?: (id: string) => void;
 }
 
@@ -36,6 +40,39 @@ const slotSx: SxProps<Theme> = {
 };
 
 export const PixelIconList: React.FC<PixelIconListProps> = ({ items, ariaLabel, onSelect }) => {
+  const renderSlot = (item: PixelIconListItem) => {
+    const icon = <PixelIcon src={item.icon} alt="" />;
+
+    if (item.href) {
+      return (
+        <ButtonBase
+          component="a"
+          href={item.href}
+          target={item.isExternal ? "_blank" : undefined}
+          rel={item.isExternal ? "noopener noreferrer" : undefined}
+          aria-label={item.name}
+          sx={slotSx}
+        >
+          {icon}
+        </ButtonBase>
+      );
+    }
+
+    if (onSelect) {
+      return (
+        <ButtonBase aria-label={item.name} onClick={() => onSelect(item.id)} sx={slotSx}>
+          {icon}
+        </ButtonBase>
+      );
+    }
+
+    return (
+      <Box role="img" aria-label={item.name} tabIndex={0} sx={slotSx}>
+        {icon}
+      </Box>
+    );
+  };
+
   return (
     <Box
       component="ul"
@@ -53,15 +90,7 @@ export const PixelIconList: React.FC<PixelIconListProps> = ({ items, ariaLabel, 
       {items.map((item) => (
         <Box component="li" key={item.id}>
           <Tooltip title={item.name} arrow enterTouchDelay={0}>
-            {onSelect ? (
-              <ButtonBase aria-label={item.name} onClick={() => onSelect(item.id)} sx={slotSx}>
-                <PixelIcon src={item.icon} alt="" />
-              </ButtonBase>
-            ) : (
-              <Box role="img" aria-label={item.name} tabIndex={0} sx={slotSx}>
-                <PixelIcon src={item.icon} alt="" />
-              </Box>
-            )}
+            {renderSlot(item)}
           </Tooltip>
         </Box>
       ))}

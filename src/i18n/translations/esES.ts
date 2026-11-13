@@ -7,7 +7,6 @@ export const esES: Translation = {
   nav: {
     label: "Navegación principal",
     home: "Inicio",
-    about: "Sobre mí",
     tech: "Tecnologías",
     projects: "Proyectos",
     expand: "Expandir menú",
@@ -15,20 +14,24 @@ export const esES: Translation = {
   },
   language: {
     change: "Cambiar idioma",
-    avatarAlt: "Foto de perfil de Lucas",
   },
-  home: {
+  themeMode: {
+    enableLight: "Activar modo claro",
+    enableDark: "Activar modo oscuro",
+  },
+  device: {
     title: "Portafolio técnico de Lucas",
     period: "2026/2027",
-    spriteAlt: "Hoguera en pixel art",
   },
-  about: {
-    title: "Sobre mí",
-    paragraphs: [
-      "Me llamo Lucas Silva Gonçalves. Soy graduado en Sistemas de Información por la Universidade do Sul de Santa Catarina (UNISUL) y trabajo como Desarrollador de Software Full-stack en Softplan.",
-      "Mi trayectoria empezó en programas de aprendizaje: hice el curso de Aprendizaje Industrial en Programación Back-End en el SENAI de São José y fui Joven Aprendiz en Intelbras, donde tuve contacto con el desarrollo móvil para iOS (Swift) y Android (Kotlin).",
-      "Hoy las tecnologías con las que más trabajo son Java (Spring Boot + JPA), JavaScript y TypeScript (Node.js, Vite y React), bases de datos relacionales (SQL) y Git. Siempre estoy buscando nuevos conocimientos mediante cursos y certificaciones, para ser mejor cada día.",
-    ],
+  home: {
+    minifigureAlt: "Muñeco estilo LEGO de Lucas en pixel art",
+    ageSuffix: "años",
+    socialLabel: "Redes sociales y contacto",
+    social: {
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      email: "Enviar correo",
+    },
   },
   tech: {
     title: "Tecnologías",

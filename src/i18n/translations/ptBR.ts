@@ -1,4 +1,4 @@
-import type { ProjectId } from "@/types";
+import type { ProjectId, SocialLinkId } from "@/types";
 
 export const ptBR = {
   meta: {
@@ -7,7 +7,6 @@ export const ptBR = {
   nav: {
     label: "Navegação principal",
     home: "Início",
-    about: "Sobre mim",
     tech: "Tecnologias",
     projects: "Projetos",
     expand: "Expandir menu",
@@ -15,20 +14,24 @@ export const ptBR = {
   },
   language: {
     change: "Alterar idioma",
-    avatarAlt: "Foto de perfil do Lucas",
   },
-  home: {
+  themeMode: {
+    enableLight: "Ativar modo claro",
+    enableDark: "Ativar modo escuro",
+  },
+  device: {
     title: "Portfólio técnico do Lucas",
     period: "2026/2027",
-    spriteAlt: "Fogueira em pixel art",
   },
-  about: {
-    title: "Sobre mim",
-    paragraphs: [
-      "Meu nome é Lucas Silva Gonçalves. Sou formado em Sistemas de Informação pela Universidade do Sul de Santa Catarina (UNISUL) e atuo como Desenvolvedor de Software Full-stack na Softplan.",
-      "Minha trajetória começou em programas de aprendizagem: fiz o curso de Aprendizagem Industrial em Programação Back-End no SENAI de São José e fui Jovem Aprendiz na Intelbras, onde tive contato com desenvolvimento mobile para iOS (Swift) e Android (Kotlin).",
-      "Hoje as tecnologias com que mais trabalho são Java (Spring Boot + JPA), JavaScript e TypeScript (Node.js, Vite e React), bancos de dados relacionais (SQL) e Git. Estou sempre em busca de novos conhecimentos por meio de cursos e certificações, para ser melhor a cada dia.",
-    ],
+  home: {
+    minifigureAlt: "Boneco estilo LEGO do Lucas em pixel art",
+    ageSuffix: "anos",
+    socialLabel: "Redes sociais e contato",
+    social: {
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      email: "Enviar e-mail",
+    } satisfies Record<SocialLinkId, string>,
   },
   tech: {
     title: "Tecnologias",

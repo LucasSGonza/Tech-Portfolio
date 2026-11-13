@@ -9,9 +9,10 @@ import stockManagerIcon from "@/assets/icons/projects/stock-manager.svg";
 import techPortfolioIcon from "@/assets/icons/projects/tech-portfolio.svg";
 import theImpostorGameIcon from "@/assets/icons/projects/the-impostor-game.svg";
 import type { Project } from "@/types";
+import { PROFILE } from "./profile";
 import { TECHNOLOGY_BY_ID } from "./technologies";
 
-const GITHUB_PROFILE_URL = "https://github.com/LucasSGonza";
+const GITHUB_PROFILE_URL = PROFILE.githubUrl;
 const GITHUB_PAGES_URL = "https://lucassgonza.github.io";
 
 const { css, html, java, javascript, kotlin, mui, python, react, spring, swift, typescript, vite } =

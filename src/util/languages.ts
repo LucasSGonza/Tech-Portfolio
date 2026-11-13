@@ -1,17 +1,17 @@
-import avatarEn from "@/assets/avatars/avatar-en.png";
-import avatarPt from "@/assets/avatars/avatar-pt.png";
-import avatarEs from "@/assets/avatars/avatar-es.png";
 import flagBr from "@/assets/icons/flags/br.svg";
 import flagEs from "@/assets/icons/flags/es.svg";
 import flagUs from "@/assets/icons/flags/us.svg";
+import minifigureEn from "@/assets/minifigures/minifigure-en.svg";
+import minifigureEs from "@/assets/minifigures/minifigure-es.svg";
+import minifigurePt from "@/assets/minifigures/minifigure-pt.svg";
 import type { Language, LanguageOption } from "@/types";
 
 export const DEFAULT_LANGUAGE: Language = "pt-BR";
 
 export const LANGUAGE_OPTION_BY_CODE: Record<Language, LanguageOption> = {
-  "pt-BR": { code: "pt-BR", label: "Português (Brasil)", flag: flagBr, avatar: avatarPt },
-  "en-US": { code: "en-US", label: "English (US)", flag: flagUs, avatar: avatarEn },
-  "es-ES": { code: "es-ES", label: "Español (España)", flag: flagEs, avatar: avatarEs },
+  "pt-BR": { code: "pt-BR", label: "Português (Brasil)", flag: flagBr, minifigure: minifigurePt },
+  "en-US": { code: "en-US", label: "English (US)", flag: flagUs, minifigure: minifigureEn },
+  "es-ES": { code: "es-ES", label: "Español (España)", flag: flagEs, minifigure: minifigureEs },
 };
 
 export const LANGUAGE_OPTIONS: LanguageOption[] = Object.values(LANGUAGE_OPTION_BY_CODE);

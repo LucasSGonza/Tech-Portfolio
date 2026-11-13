@@ -4,6 +4,8 @@
 
 É uma aplicação web (SPA) que expõe de forma visual as **tecnologias** que mais utilizo e tive contato em minha trajetória como desenvolvedor, juntamente dos principais projetos pessoais que desenvolvi. O visual é inspirada em um aparelho portátil estilo "Pokédex" com ícones em pixel art por todo o projeto 👾.
 
+🌐 **Site publicado:** <https://lucassgonza.github.io/Tech-Portfolio/>
+
 ## Tecnologias
 
 | Área | Tecnologia |
@@ -28,7 +30,7 @@ npm install
 npm run dev
 ```
 
-O Vite sobe em <http://localhost:3000> (porta fixa: se estiver ocupada, o comando falha em vez de trocar de porta) e abre o navegador.
+O Vite sobe em <http://localhost:3000/Tech-Portfolio/> (porta fixa: se estiver ocupada, o comando falha em vez de trocar de porta) e abre o navegador.
 
 > Com o Node 23, o `npm install` mostra um aviso `EBADENGINE` do `eslint-visitor-keys`. O aviso é esperado e inofensivo.
 
@@ -39,11 +41,18 @@ O Vite sobe em <http://localhost:3000> (porta fixa: se estiver ocupada, o comand
 | `npm run dev` | Servidor de desenvolvimento (alias de `npm start`) |
 | `npm run build` | Checagem de tipos (`tsc -b`) e build de produção em `dist/` |
 | `npm run lint` | Executa o ESLint em todo o projeto |
-| `npm run preview` | Serve o build de produção localmente |
+| `npm run preview` | Serve o build de produção localmente (em `/Tech-Portfolio/`) |
 
 Não há testes automatizados configurados.
 
-O build é um site estático. Como as rotas usam `BrowserRouter`, a hospedagem precisa redirecionar qualquer caminho para o `index.html`.
+## Deploy
+
+O site é publicado no **GitHub Pages** pelo workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), que roda a cada push na `main` (ou manualmente, em **Actions → Deploy to GitHub Pages → Run workflow**): instala as dependências com `npm ci`, roda `npm run build` e publica a pasta `dist/`.
+
+- **Configuração única no GitHub:** `Settings → Pages → Build and deployment → Source: GitHub Actions`.
+- **Caminho base:** como é um site de projeto, o app é servido em `/Tech-Portfolio/` (`base` no `vite.config.ts` e `basename` do `BrowserRouter` em `src/main.tsx`).
+- **`404.html`:** o GitHub Pages não redireciona rotas para o `index.html`. O workflow copia `dist/index.html` para `dist/404.html`, e assim o React Router assume quando alguém abre ou recarrega `/Tech-Portfolio/tech` ou `/Tech-Portfolio/projects` diretamente.
+- **Tudo é público:** todo o conteúdo de `dist/` (e, portanto, de `public/`) fica acessível a qualquer pessoa. Nunca coloque `.env`, segredos ou dados privados em `public/` nem no código.
 
 ## Estrutura do projeto
 

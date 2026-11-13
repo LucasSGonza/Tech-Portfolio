@@ -9,7 +9,7 @@ description: Módulo Material UI (MUI) — integração no main.tsx, tema e toke
 
 ## Integração no `main.tsx`
 
-Quando o projeto tiver tema customizado, `ThemeProvider` + `CssBaseline` envolvem o `App`, por dentro do router e do store (ver ordem canônica no `react-development-guide.md`):
+Quando o projeto tiver tema customizado, `ThemeProvider` + `CssBaseline` envolvem o `App`, por dentro do router e do store (ver ordem canônica no `react-development-guide.md`). Neste projeto eles ficam dentro do `ThemeModeProvider` (`src/theme/`), que cria o tema a partir do modo escuro/claro; o exemplo abaixo é a forma mínima:
 
 ```tsx
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -54,7 +54,7 @@ export const theme = createTheme({
 - Estilize com a prop `sx` (ou `styled`) — **NUNCA** `style={{}}`.
 - Layout com `Box`, `Stack`, `Container` e `Grid`. Preserve a semântica com `component`: `<Box component="main">`, `<Box component="section">`.
 - Textos com `Typography` — **NUNCA** `<p>`, `<h1>`, `<span>` crus. Use `variant` para o visual e `component` para a semântica: `<Typography variant="h4" component="h1">`.
-- Imagens: `<Box component="img" src={avatar} alt="Descrição" sx={{ width: 120 }} />`.
+- Imagens: `<Box component="img" src={minifigure} alt="Descrição" sx={{ width: 120 }} />`.
 - Objetos `sx` grandes ou repetidos em mais de um lugar: extraia para constante tipada (`const cardSx: SxProps<Theme> = { ... }`) ou para um componente dedicado.
 - Responsividade mobile-first com valores por breakpoint: `sx={{ flexDirection: { xs: "column", md: "row" } }}`.
 - Prefira componentes prontos do MUI (`Button`, `TextField`, `Dialog`, `Card`, `Alert`, `Skeleton`, `CircularProgress`) a recriá-los do zero.

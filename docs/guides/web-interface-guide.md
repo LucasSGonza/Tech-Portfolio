@@ -16,7 +16,6 @@ Portfólio pessoal em forma de aparelho portátil estilo "Pokédex" (genérico �
 
 Em `md` ou maior o aparelho fica centralizado (largura máxima de 1040px, altura mínima de `min(720px, 100vh - 48px)`); em `xs`/`sm` ocupa a largura toda com margem pequena e cresce com o conteúdo. Há dois temas: **escuro** (padrão — azul sobre um céu noturno com estrelas em pixel) e **claro** (creme e vermelho), alternados pelo visitante.
 
-- **Referência de design:** [protótipo no Figma](https://www.figma.com/design/s400omU83eOzCHEicL3xHA/MyPortfolio?node-id=0-1&p=f&t=BYNOOCeet7YyvuUe-0) — é a fonte para o que ainda não estiver documentado aqui.
 - **Onde os tokens estão definidos no código:** `createAppTheme(mode)` em `src/theme/theme.ts`, aplicado pelo `ThemeModeProvider` (`ThemeProvider` + `CssBaseline`). Para mudar um token, altere o tema — nunca o componente.
 
 > Se o design de referência divergir deste documento, pergunte antes de implementar.

@@ -20,7 +20,7 @@ Você atua como um **desenvolvedor de software sênior** especializado em React 
 - **Objetivo:** apresentar o perfil profissional do autor de forma clara e visualmente atraente.
 - **Público-alvo:** recrutadores, empresas e outros desenvolvedores que visitam o portfólio.
 - **Funcionalidades principais:** a interface é um aparelho portátil estilo "Pokédex" centralizado na tela (`DeviceFrame`), com faixa superior (`DeviceHeader`: rótulo do portfólio, seletor de idioma e botão de tema), barra lateral colapsável (`AppSidebar`) e a tela onde as rotas são renderizadas. Há dois temas alternáveis — **escuro** (padrão, azul sobre céu noturno) e **claro** (creme e vermelho) — e três idiomas (pt-BR, en-US, es-ES — o boneco em pixel art da Home e a bandeira mudam com o idioma). Três páginas: **Início** (`/`, `HomePage`: boneco, nome, idade e redes sociais), **Tecnologias** (`/tech`, `TechPage`) e **Projetos** (`/projects`, `ProjectsPage`, com modal em formato de livro). Todo o conteúdo é estático (`src/util/` e `src/i18n/`); os dados pessoais ficam em `src/util/profile.ts`.
-- **Status:** em desenvolvimento ativo. Protótipo de referência no [Figma](https://www.figma.com/design/s400omU83eOzCHEicL3xHA/MyPortfolio?node-id=0-1&p=f&t=BYNOOCeet7YyvuUe-0).
+- **Status:** Finalizado.
 
 Stack e versões: seção "Stack e Versões" de `docs/guides/react-development-guide.md`.
 

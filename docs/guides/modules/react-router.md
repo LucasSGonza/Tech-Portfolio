@@ -15,12 +15,14 @@ import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
     </BrowserRouter>
   </StrictMode>
 );
 ```
+
+> **Caminho base:** o site é publicado no GitHub Pages em `/Tech-Portfolio/` (`base` no `vite.config.ts`). O Vite expõe esse valor em `import.meta.env.BASE_URL`, e o `basename` do `BrowserRouter` o reutiliza — por isso as rotas e os `<Link to="/tech">` continuam escritos **sem** o prefixo: o React Router o acrescenta sozinho. Nunca repita `/Tech-Portfolio` no código; se o caminho base mudar, altere só o `base` do Vite.
 
 ## `src/routes/WebRouter.tsx`
 

@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Box,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Tooltip,
-} from "@mui/material";
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from "@mui/material";
 import { useState } from "react";
 import type { MouseEvent } from "react";
 import { PixelIcon } from "@/components/PixelIcon";
@@ -38,13 +29,7 @@ export const LanguageSwitcher: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0.5 }}>
-      <Avatar
-        src={currentOption.avatar}
-        alt={t.language.avatarAlt}
-        sx={{ width: 64, height: 64, border: 3, borderColor: "secondary.main" }}
-      />
-
+    <>
       <Tooltip title={t.language.change} arrow>
         <IconButton
           aria-label={`${t.language.change}: ${currentOption.label}`}
@@ -72,6 +57,6 @@ export const LanguageSwitcher: React.FC = () => {
           </MenuItem>
         ))}
       </Menu>
-    </Box>
+    </>
   );
 };
